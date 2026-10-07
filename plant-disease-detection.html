@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plant Disease Detection</title>
+<style>
+:root{
+  --bg:#eef8ee;--card:#fff;--text:#222;--muted:#666;--green:#2e7d32;--green-dark:#1b5e20;
+  --accent:#4caf50;--result:#e8f5e9;--shadow:rgba(0,0,0,.15);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#101a12;--card:#1a261c;--text:#e8efe8;--muted:#a3b3a5;--result:#223626;--shadow:rgba(0,0,0,.5);--green:#66bb6a;--green-dark:#43a047}
+}
+:root[data-theme="dark"]{--bg:#101a12;--card:#1a261c;--text:#e8efe8;--muted:#a3b3a5;--result:#223626;--shadow:rgba(0,0,0,.5);--green:#66bb6a;--green-dark:#43a047}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px}
+.container{width:100%;max-width:450px;background:var(--card);padding:30px;border-radius:20px;text-align:center;box-shadow:0 5px 20px var(--shadow)}
+h1{color:var(--green);margin-bottom:10px}
+.subtitle{color:var(--muted);margin-bottom:25px}
+.upload-box{border:2px dashed var(--accent);padding:25px;border-radius:15px;margin-bottom:20px}
+input[type=file]{margin:15px 0;max-width:100%}
+#preview{display:none;width:100%;max-height:250px;object-fit:contain;border-radius:12px;margin-top:15px}
+button{width:100%;padding:13px;background:#2e7d32;color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer}
+button:hover{background:#1b5e20}
+#result{display:none;margin-top:20px;padding:15px;background:var(--result);border-radius:10px;text-align:left}
+#result h3{color:var(--green);margin-bottom:8px}
+.note{font-size:12px;color:var(--muted);margin-top:12px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🌱 Plant Disease Detection</h1>
+  <p class="subtitle">Upload a plant leaf image to detect possible disease.</p>
+
+  <div class="upload-box">
+    <label for="plantImage">📷 Select Plant Leaf Image</label><br>
+    <input type="file" id="plantImage" accept="image/*">
+    <img id="preview" alt="Plant leaf preview">
+  </div>
+
+  <button id="detectBtn">🔍 Detect Disease</button>
+
+  <div id="result">
+    <h3>Detection Result</h3>
+    <p><strong>Plant:</strong> Tomato</p>
+    <p><strong>Disease:</strong> Early Blight</p>
+    <p><strong>Confidence:</strong> 94%</p>
+    <br>
+    <p>💡 <strong>Suggestion:</strong> Remove infected leaves and follow appropriate disease-management practices.</p>
+    <p class="note">Demo only: this sample result is not generated from your image.</p>
+  </div>
+</div>
+
+<script>
+const input=document.getElementById("plantImage");
+const preview=document.getElementById("preview");
+const result=document.getElementById("result");
+input.addEventListener("change",e=>{
+  const f=e.target.files[0];
+  result.style.display="none";
+  if(f){preview.src=URL.createObjectURL(f);preview.style.display="block";}
+});
+document.getElementById("detectBtn").addEventListener("click",()=>{
+  if(!input.files[0]){alert("Please upload a plant leaf image first!");return;}
+  result.style.display="block";
+});
+</script>
+</body>
+</html>
